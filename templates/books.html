@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <!-- view-1 -->
+    <!-- <div>
+        {% for item in images %}
+            <img src="{{ item.image }}" alt="{{ item.title }}">
+        {% endfor %}
+    </div> -->
+    
+    <!-- view-2 : https://codemyui.com/grayscale-to-colour-animation-on-hover-for-team-section/ -->
+    <!-- <article class="flow">
+        <h1>{{ list_name }}</h1>
+        <p>Available results from NYT books for <strong>{{ list_name }}</strong> category.</p>
+        <div class="team">
+        <ul class="auto-grid" role="list">
+            {% for item in images %}
+                <li>
+                    <a href="{{ item.amazon }}" target=_blank" class="profile">
+                        <h2 class="profile__name">{{ item.title }}</h2>
+                        <p>{{ item.author }}</p>
+                        <img alt="{{ item.title }}" src="{{ item.image }}" width="800" height="800" />
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        </div>
+    </article> -->
+    <!-- view-3 : https://codemyui.com/card-ui-blog-tiles-layout-pure-css/ -->
+    <!-- <div class="wrap">
+        {% for item in images %}
+            <div class="tile"> 
+            <img alt="{{ item.title }}" src="{{ item.image }}" width="500" height="800" />
+            <div class="text">
+            <h1>{{ item.title }}</h1>
+            <h2 class="animate-text">{{ item.author }}</h2>
+            <p class="animate-text">{{ item.description }}</p>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            </div>
+            </div>
+        {% endfor %}
+    </div> -->
+    <!-- view-4: https://codemyui.com/responsive-bookshelf-grid-with-tilt-hover-animation/ -->
+    <ul>
+        {% for item in images %}
+            <li>
+                <img alt="{{ item.title }}" src="{{ item.image }}">
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

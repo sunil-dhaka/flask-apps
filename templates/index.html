@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>NYT Best Sellers Lists</h1>
+    <form action="/books" method="post">
+    <!-- <input autocomplete="off" autofocus name="name" placeholder="Name" type="text"> -->
+    <select name="lists">
+    <option disabled selected value="">Lists</option>
+    {% for item in lists %}
+        <option value="{{ item.list_name }}">{{ item.list_name }}</option>
+    {% endfor %}
+    </select>
+    <!-- HELP for datepicker taken from: https://felixg.io/docs/products/datedropper-jquery -->
+    <input id="date-input" type="text" name="date-input" placeholder="Pick a date">
+    <!-- datedropper init -->
+    <script>$('#date-input').dateDropper();</script> 
+    <input type="submit" value="Get List">
+    </form>
+{% endblock %}
