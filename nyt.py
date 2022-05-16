@@ -1,4 +1,5 @@
 from flask import Flask,render_template,request
+from sqlalchemy import false, true
 
 import login
 import requests
@@ -24,9 +25,10 @@ def get_encoded_list_name(input_list,selected_list):
     for item in input_list:
         if item['list_name']==selected_list:
             encoded_name_of_list=item['encoded_name']
-            break
-        
-    return encoded_name_of_list
+            return encoded_name_of_list
+    
+    return 'invalid'
+    
 
 # ================================================================
 
@@ -34,7 +36,7 @@ app=Flask(__name__)
 
 @app.route('/',methods=['GET','POST'])
 def main():
-    return render_template('index.html',lists=list_data)
+    return render_template('layout.html',lists=list_data)
 
 @app.route('/books',methods=['GET','POST'])
 def books():
@@ -52,12 +54,31 @@ def books():
         results=r.get('results',[]).get('books',[])
         image_data=[]
         for result in results:
-            image_data.append({'title':result['title'],'author':result['author'],'image':result['book_image'],'amazon':result['amazon_product_url'],'description':result['description']}) 
+            image_data.append({'title':result['title'],'author':result['author'],'image':result['book_image'],'amazon':result['amazon_product_url'],'description':result['description'],'weeks':result['weeks_on_list']}) 
 
     except Exception as e:
         print(e)
-        image_data=[{'title':'no title','author':'no author','image':'https://salautomotive.in/wp-content/uploads/2017/01/no-image-available.jpg','amazon':'https://amazon.com','description':'no description'}]
+        image_data=[{'title':'no title','author':'no author','image':'https://islandpress.org/sites/default/files/default_book_cover_2015.jpg','amazon':'https://amazon.com','description':'no description','weeks':0}]
         
-    return render_template('books.html',images=image_data,list_name=request.form.get('lists'))
+    return render_template('books.html',images=image_data,list_name=request.form.get('lists'),lists=list_data)
+
+@app.route('/search',methods=['GET','POST'])
+def search():
+    # names=['title','author','isbn']
+
+    # query_str = request.query_string.split
+    # print(request.query_string)
+    url=f'https://api.nytimes.com/svc/books/v3/reviews.json?{request.query_string.decode(encoding="utf-8")}&api-key={api_key}'
+    # print(url)
+    r=requests.get(url)
+
+    r=r.json()
+    results=r.get('results',[])
+
+    if r['num_results']>0:
+        return render_template('search.html',search_results=results)
+    else:
+        return render_template('invalid.html')
+
 if __name__=="__main__":
     app.run(debug=True,port=8080)

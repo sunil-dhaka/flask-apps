@@ -1,24 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1,width=device-width">
         <title>
             NYT Books
         </title>
-        <!-- stylesheets -->
-        <!-- <link rel="stylesheet" type= "text/css" href= "{{url_for('static', filename='main.css') }}"> -->
-        <link rel="stylesheet" type= "text/css" href= "{{url_for('static', filename='bookcase.css') }}">
-        <!-- <link rel="stylesheet" href="https://unpkg.com/modern-css-reset@1.4.0/dist/reset.min.css"> -->
-        <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"> -->
-        <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,900,700,100italic,300italic,400italic,500italic,700italic,900italic,300,100%27"> -->
-        <!-- javascripts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+        <!-- bootstrap stylesheets -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <!-- bootstrap icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+        <!-- datedropper js -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        
-        <!-- datedropper -->
-        <script src="{{url_for('static', filename='datedropper-jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='datedropper-jquery.js') }}"></script>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg bg-light fixed-top">
+            <div class="container-sm">
+              <a class="navbar-brand" href="/"><i class="bi bi-book"> </i> NYT Books</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Lists</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Author</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Title</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="isbn-tab" data-bs-toggle="tab" data-bs-target="#isbn-tab-pane" type="button" role="tab" aria-controls="isbn-tab-pane" aria-selected="false">ISBN</button>
+                      </li>
+                  </ul>
+                </div>
+                  
+              </div>
+          </nav>
+          <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                        <section class="text-white pt-5" id="lists">
+                            <div class="container-sm bg-primary p-5">
+                                <form action="/books" method="post">
+                                    <label for="nytList" class="form-label">Search NYT top lists</label>
+                                    <input name="lists" list="apiList" placeholder="type here" id="nytList" class="form-control">
+                                    <datalist id="apiList">
+                                        {% for item in lists %}
+                                            <option value="{{ item.list_name }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <button class="btn btn-success mt-3" type="submit"><span class="bi bi-search"> </span>Get Books</button>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        <section class="text-white pt-5" id="lists">
+                            <div class="container-sm bg-primary p-5">
+                                <form action="/search">
+                                    <label for="nytList" class="form-label">Search using autor name</label>
+                                    <input name="author" list="apiList" placeholder="type here" id="nytList" class="form-control">
+                                    <datalist id="apiList">
+                                        <!-- data for these comes from database or csv -->
+                                        {% for item in lists %}
+                                            <option value="{{ item.list_name }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <button class="btn btn-success mt-3" type="submit"><span class="bi bi-search"> </span>Get Books</button>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                        <section class="text-white pt-5" id="lists">
+                            <div class="container-sm bg-primary p-5">
+                                <form action="/search">
+                                    <label for="nytList" class="form-label">Search using book title</label>
+                                    <input name="title" list="apiList" placeholder="type here" id="nytList" class="form-control">
+                                    <datalist id="apiList">
+                                        <!-- data for these comes from database or csv -->
+                                        {% for item in lists %}
+                                            <option value="{{ item.list_name }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <button class="btn btn-success mt-3" type="submit"><span class="bi bi-search"> </span>Get Books</button>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane fade" id="isbn-tab-pane" role="tabpanel" aria-labelledby="isbn-tab" tabindex="0">
+                        <section class="text-white pt-5" id="lists">
+                            <div class="container-sm bg-primary p-5">
+                                <form action="/search">
+                                    <label for="nytList" class="form-label">Search using book isbn</label>
+                                    <input name="isbn" list="apiList" placeholder="type here" id="nytList" class="form-control">
+                                    <datalist id="apiList">
+                                        <!-- data for these comes from database or csv -->
+                                        {% for item in lists %}
+                                            <option value="{{ item.list_name }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <button class="btn btn-success mt-3" type="submit"><span class="bi bi-search"> </span>Get Books</button>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                  </div>
         {% block body %}{% endblock %}
+        <!-- bootstrap javascript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>    
     </body>
 </html>

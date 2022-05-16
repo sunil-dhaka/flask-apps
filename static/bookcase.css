@@ -8,16 +8,18 @@
   }
   
   body{
-    background-color: #182028;
+    background-color: #b3d8fc;
   }
   
   ul{
+    list-style-type: none;
     display:grid;
     grid-template-columns: repeat(var(--columns),1fr);
     margin: 200px -40px;
   }
   
   li{
+    list-style: none;
     grid-column-end: span 2;
     position: relative;
     width: 100%;

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <section class="text-dark pt-5">
+        <div class="container-sm"> 
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for item in search_results %}
+                    <div class="col">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                                {% if item.isbn13 is defined %}
+                                    <img src="{{ 'https://storage.googleapis.com/du-prd/books/images/' ~ item.isbn13[0] ~ '.jpg' }}" class="img-fluid rounded-start" alt="{{ 'Image for book: ' ~ item.book_title }}">
+                                {% else %}
+                                    <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" class="img-fluid rounded-start" alt="{{ 'Image for book: ' ~ item.book_title }}">
+                                {% endif %}
+
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title font-weight-bold">{{ item.book_title }}</h5>
+                                    <h6 class="card-subtitle mb-2 font-weight-normal">By {{ item.book_author }}</h6>
+                                    <p class="card-text font-weight-light">{{ item.summary }}</p>
+                                    <a href="{{ item.url }}" class="btn btn-outline-secondary"><i class="bi bi-book"> </i> Read Review</a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>                  
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- HELP for datepicker taken from: https://felixg.io/docs/products/datedropper-jquery -->
+    <!-- <input id="date-input" type="text" name="date-input" placeholder="Pick a date"> -->
+    <!-- datedropper init -->
+    <!-- <script>$('#date-input').dateDropper();</script> 
+    <input type="submit" value="Get List">
+    </form> -->
+{% endblock %}
