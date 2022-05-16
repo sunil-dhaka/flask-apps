@@ -47,9 +47,7 @@
     <!-- view-4: https://codemyui.com/responsive-bookshelf-grid-with-tilt-hover-animation/ -->
     <ul>
         {% for item in images %}
-            <li>
-                <img alt="{{ item.title }}" src="{{ item.image }}">
-            </li>
+            <li><img alt="{{ item.title }}" src="{{ item.image }}"></li>
         {% endfor %}
     </ul>
 {% endblock %}
