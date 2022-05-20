@@ -1,0 +1,8 @@
+{% extends "login_layout.html" %}
+{% block body %}
+    {% if session["username"] %}
+        Hi {{ session['username'] }}. You are logged in. Want to <a href="/logout">logout.</a>
+    {% else %}
+        You are not logged in. <a href="/login">Login here.</a>
+    {% endif %}
+{% endblock %}
