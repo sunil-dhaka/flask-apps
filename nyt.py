@@ -1,10 +1,13 @@
-from flask import Flask,render_template,request
-from sqlalchemy import false, true
+from flask import Flask,render_template,request,session
+from flask_session import Session
+from flask_mail import Mail,message
+import sqlite3
 
 import login
 import requests
 api_key=login.nyt_api
 
+# ================================================================
 list_url='https://api.nytimes.com/svc/books/v3/lists/names.json?api-key='+api_key
 
 r=requests.get(list_url)
@@ -17,8 +20,6 @@ try:
 except Exception:
     list_data=[{'list_name':'No List','encoded_name':'no_list'}]
 
-# print(list_data)
-
 # ================================================================
 def get_encoded_list_name(input_list,selected_list):
     # encoded_name_of_list=''
@@ -28,7 +29,6 @@ def get_encoded_list_name(input_list,selected_list):
             return encoded_name_of_list
     
     return 'invalid'
-    
 
 # ================================================================
 
@@ -62,20 +62,20 @@ def books():
         
     return render_template('books.html',images=image_data,list_name=request.form.get('lists'),lists=list_data)
 
+# should get be allowed in sensetive cases, although this one is not
+# but after login feature implemented it is going to be
 @app.route('/search',methods=['GET','POST'])
 def search():
-    # names=['title','author','isbn']
-
-    # query_str = request.query_string.split
-    # print(request.query_string)
+    
     url=f'https://api.nytimes.com/svc/books/v3/reviews.json?{request.query_string.decode(encoding="utf-8")}&api-key={api_key}'
-    # print(url)
+    
     r=requests.get(url)
 
     r=r.json()
     results=r.get('results',[])
 
-    if r['num_results']>0:
+    # in some cases num_results is not even there so that it handles by checking key , if it is not there then assigning it to zero
+    if r.get('num_results',0)>0:
         return render_template('search.html',search_results=results)
     else:
         return render_template('invalid.html')

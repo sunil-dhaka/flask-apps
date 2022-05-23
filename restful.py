@@ -15,6 +15,7 @@ def welcome():
 def greek_gods():
     return jsonify({'gods':gods})
 
+# when name-string is empty gives 404 error
 @app.route('/gods/<string:name>',methods=['GET'])
 def greek_god(name):
     god=[god for god in gods if god['name']==name]
