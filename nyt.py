@@ -1,7 +1,4 @@
-from flask import Flask,render_template,request,session
-from flask_session import Session
-from flask_mail import Mail,message
-import sqlite3
+from flask import Flask,render_template,request
 
 import login
 import requests
