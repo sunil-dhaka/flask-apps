@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+    <section class="vh-100 bg-primary bg-opacity-10">
+        <div class="container justify-content-center align-items-center text-center">
+            <h1 class="display-3 pt-5">
+                You are logged in as <code class="text-success">{{ session['username'] }}</code>. Click <a href="/logout" class="link link-success">here</a> to logout.
+            </h1>
+        </div>
+    </section>
+{% endblock %}

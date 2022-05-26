@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+    <section class="vh-100 bg-primary bg-opacity-10">
+        <div class="container-sm d-flex justify-content-center align-items-center py-5 h-100">
+            <div class="card shadow-sm bg-primary bg-opacity-50 text-center border rounded-4">
+                <div class="card-body">
+                    <h3 class="card-title pt-3 text-dark display-6 lead"><strong>Login Page</strong></h3>
+                    <!-- allowing only post method is also superimportant here -->
+                    <form action="/login" method="post">
+                        <div class="col-sm px-5 py-3">
+                        <input type="text" name="username" class="form-control-lg" placeholder="username" id="username">
+                    </div>
+                        <div class="col-sm px-5 py-3">
+                        <!-- input type is here very important otherwise the password will show -->
+                        <input type="password" name="password" class="form-control-lg" placeholder="password" id="password">
+                        </div>
+                    <button class="btn btn-outline-dark py-3 lead" type="submit"><strong>Login</strong> <i class="bi bi-box-arrow-in-right"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
